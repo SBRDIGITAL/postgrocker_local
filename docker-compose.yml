@@ -1,0 +1,23 @@
+services:
+  postgrocker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./data/postgrocker:/var/lib/postgresql/data
+    environment:
+      TZ: UTC  # Устанавливаем временную зону на UTC
+    restart: always  # Перезапускать контейнер в случае сбоя
+    ports:
+      - "5435:5432"  # Проброс порта 5435 для доступа извне, внутренний порт 5432
+    networks:
+      - postgrocker_network  # Указываем сеть, к которой будет подключен сервис
+
+
+volumes:
+  postgrocker:
+
+networks:
+  postgrocker_network:  # Определяем сеть
