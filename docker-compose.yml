@@ -1,9 +1,9 @@
 services:
   docker_postgres:
+    container_name: docker_postgres
     build:
       context: .
       dockerfile: Dockerfile
-      container_name: docker_postgres
     env_file:
       - .env
     volumes:
