@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      container_name: docker_postgres
     env_file:
       - .env
     volumes:
@@ -22,3 +23,4 @@ volumes:
 
 networks:
   postgrocker_network:  # Определяем сеть
+    external: true
