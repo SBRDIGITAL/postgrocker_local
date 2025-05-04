@@ -1,5 +1,5 @@
 services:
-  postgrocker:
+  docker_postgres:
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,13 +9,12 @@ services:
       - ./data/postgrocker:/var/lib/postgresql/data
     environment:
       TZ: UTC  # Устанавливаем временную зону на UTC
-      POSTGRES_HOST_AUTH_METHOD: trust  # Устанавливаем метод аутентификации
-    command: postgres -c listen_addresses='localhost'  # Устанавливаем listen_addresses
     restart: always  # Перезапускать контейнер в случае сбоя
     ports:
       - "5435:5432"  # Проброс порта 5435 для доступа извне, внутренний порт 5432
     networks:
       - postgrocker_network  # Указываем сеть, к которой будет подключен сервис
+
 
 
 volumes:
