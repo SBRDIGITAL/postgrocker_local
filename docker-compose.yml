@@ -10,7 +10,6 @@ services:
       - ./data/postgrocker:/var/lib/postgresql/data
     environment:
       TZ: UTC  # Устанавливаем временную зону на UTC
-      POSTGRES_LOG_ROTATION_SIZE: 100MB  # Устанавливаем максимальный размер файла журнала в байтах
     restart: always  # Перезапускать контейнер в случае сбоя
     ports:
       - "127.0.0.1:${POSTGRES_PORT}:5432"  # Проброс порта 5435 для доступа извне, внутренний порт 5432
