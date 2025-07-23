@@ -1,6 +1,6 @@
 services:
-  docker_postgres:
-    container_name: docker_postgres
+  postgrocker:
+    container_name: postgrocker
     build:
       context: .
       dockerfile: Dockerfile
@@ -8,19 +8,42 @@ services:
       - .env
     volumes:
       - ./data/postgrocker:/var/lib/postgresql/data
+    command: >
+      postgres
+      -c shared_buffers=1GB
+      -c effective_cache_size=4GB
+      -c work_mem=13MB
+      -c maintenance_work_mem=256MB
+      -c min_wal_size=2GB
+      -c max_wal_size=3GB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=-1
+      -c listen_addresses='*'
+      -c max_connections=100
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+      -c max_worker_processes=8
+      -c max_parallel_workers_per_gather=2
+      -c max_parallel_workers=2
+      -c logging_collector=on
+      -c log_checkpoints=on
+      -c log_connections=on
+      -c log_disconnections=on
+      -c log_lock_waits=on
+      -c log_temp_files=0
+      -c lc_messages='C'
+      -c log_min_duration_statement='10s'
+      -c log_autovacuum_min_duration=0
+      -c log_destination='csvlog'
     environment:
       TZ: UTC  # Устанавливаем временную зону на UTC
+      POSTGRES_LOG_ROTATION_SIZE: 100MB  # Устанавливаем максимальный размер файла журнала в байтах
     restart: always  # Перезапускать контейнер в случае сбоя
     ports:
-      - "127.0.0.1:${POSTGRES_PORT}:5432"  # Проброс порта 5435 для доступа извне, внутренний порт 5432
+      - "127.0.0.1:${POSTGRES_PORT:-5435}:5432"
     networks:
       - postgrocker_network  # Указываем сеть, к которой будет подключен сервис
 
 
-
-volumes:
-  postgrocker:
-
 networks:
   postgrocker_network:  # Определяем сеть
-    external: true
