@@ -54,7 +54,6 @@ docker-compose up -d
 | max_wal_size                  | 3GB          | Максимальный размер WAL сегментов |
 | checkpoint_completion_target  | 0.9          | Доля времени между чекпоинтами |
 | wal_buffers                   | -1           | Размер буфера WAL (автоматически) |
-| listen_addresses              | '*'          | На каких адресах слушать подключения |
 | max_connections               | 100          | Максимальное число одновременных подключений |
 | random_page_cost              | 1.1          | Оценка стоимости случайного чтения страницы |
 | effective_io_concurrency      | 200          | Количество одновременных операций ввода-вывода |

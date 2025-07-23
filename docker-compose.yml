@@ -18,7 +18,6 @@ services:
       -c max_wal_size=3GB
       -c checkpoint_completion_target=0.9
       -c wal_buffers=-1
-      -c listen_addresses='*'
       -c max_connections=100
       -c random_page_cost=1.1
       -c effective_io_concurrency=200
